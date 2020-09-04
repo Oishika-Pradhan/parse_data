@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <title>
+        3 Compounds
+    </title>
+    <body>
+        <form action="/downloadexcel/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button name="download" type="submit" value="pc">Download PC dataset</button>
+            <button name="download" type="submit" value="lpc">Download LPC dataset</button>
+            <button name="download" type="submit" value="plas">Download plasmalogen dataset</button>
+        </form>
+    </body>
+</html>

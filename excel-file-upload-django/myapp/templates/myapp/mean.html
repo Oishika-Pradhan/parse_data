@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <title>
+        Round Off
+    </title>
+    <body>
+        <form action="/downloadexcel/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button name="download" type="submit" value="mean">Mean</button>
+        </form>
+    </body>
+</html>
