@@ -8,16 +8,13 @@ from io import BytesIO as IO
 #from .forms import NameForm
 #from pandas_djmodel import get_model_repr
 
-df = pd.DataFrame()
+# df = pd.DataFrame()
 
 def index(request):
 	if "GET" == request.method:
 		return render(request, 'myapp/index.html', {})
 	else:
 		excel_file = request.FILES["excel_file"]
-
-		# you may put validations here to check extension or file size
-
 		wb = openpyxl.load_workbook(excel_file)
 		df=pd.read_excel(excel_file)
 		df['Accepted Compound ID'].fillna("No value", inplace=True)
@@ -86,6 +83,8 @@ def mean(request):
 		return render(request, 'myapp/no_access.html', {})
 
 def downloadexcel(request):
+	df_output=pd.DataFrame()
+	f=""
 	if request.method=='POST':
 		if 'retention' == request.POST.get('download'):
 			df_output=pd.read_pickle('./ret.pkl')
@@ -104,6 +103,8 @@ def downloadexcel(request):
 			df_output=pd.read_pickle('./mean.pkl')
 		else:
 			return render(request, 'myapp/no_access.html', {})
+	else:
+		return render(request, 'myapp/no_access.html', {})
 
 # my "Excel" file, which is an in-memory output file (buffer) 
 # for the new workbook
@@ -118,8 +119,6 @@ def downloadexcel(request):
 
 # Otherwise gives error if the excel file is empty
 	excel_file.seek(0)
-
-# set the mime type so that the browser knows what to do with the file
 	response = HttpResponse(excel_file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 # Content-Disposition header to send file name

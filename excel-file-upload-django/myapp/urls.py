@@ -5,6 +5,7 @@ from . import views
 app_name = "myapp"
 
 urlpatterns = [
+    path('', views.index, name='index'),
     path('upload/', views.index, name='index'),
     path('compounds3/', views.compound, name='compound'),
     path('retention_roundoff/', views.retention, name='retention'),
